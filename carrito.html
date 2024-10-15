@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #fff;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #FF6F61;
+        }
+        .user-info {
+            color: #333;
+            font-size: 16px;
+        }
+        .container {
+            padding: 20px;
+        }
+        .cart-items {
+            margin-top: 20px;
+        }
+        .cart-item {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+        .cart-item h3 {
+            margin: 0;
+            color: #333;
+        }
+        .cart-item p {
+            color: #777;
+            margin: 5px 0;
+        }
+        .cart-item .price {
+            font-size: 18px;
+            color: #FF6F61;
+        }
+        .total {
+            font-size: 20px;
+            margin-top: 20px;
+            font-weight: bold;
+            color: #FF6F61;
+        }
+        .checkout-button {
+            background-color: #FF6F61;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .checkout-button:hover {
+            background-color: #e65a50;
+        }
+
+        /* Estilos para los iconos */
+        .icons {
+            display: flex;
+            gap: 10px;
+        }
+        .icons a {
+            text-decoration: none;
+            font-size: 24px;
+            color: #333;
+            cursor: pointer;
+        }
+        .icons a:hover {
+            color: #FF6F61;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">Carrito de Compras</div>
+    <div class="icons">
+        
+        <a href="Style Store.html" title="Volver a Style Store">❌</a>
+        <a onclick="clearCart()" title="Vaciar Carrito">🔄</a>
+    </div>
+    <div class="user-info" id="user-info"></div>
+</header>
+
+<div class="container">
+    <h2>Productos en tu Carrito</h2>
+    <div class="cart-items" id="cart-items">
+        
+    </div>
+    <div class="total" id="total">
+        Total: $0.00
+    </div>
+    <button class="checkout-button" onclick="checkout()">Proceder a Pago</button>
+</div>
+
+<script>
+    
+    function loadCart() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartItemsDiv = document.getElementById('cart-items');
+        const totalDiv = document.getElementById('total');
+
+        if (cart.length === 0) {
+            cartItemsDiv.innerHTML = '<p>No hay productos en el carrito.</p>';
+            totalDiv.textContent = 'Total: $0.00';
+            return;
+        }
+
+        let total = 0;
+        cart.forEach(item => {
+            const cartItemDiv = document.createElement('div');
+            cartItemDiv.className = 'cart-item';
+            cartItemDiv.innerHTML = `
+                <h3>${item.name}</h3>
+                <p>ID: ${item.id}</p>
+                <p class="price">$${item.price.toFixed(2)}</p>
+            `;
+            cartItemsDiv.appendChild(cartItemDiv);
+            total += item.price;
+        });
+
+        totalDiv.textContent = `Total: $${total.toFixed(2)}`;
+    }
+
+    
+    function checkout() {
+        alert("Función de pago no implementada.");
+        
+    }
+
+   
+    function clearCart() {
+        localStorage.removeItem('cart');
+        alert("El carrito ha sido vaciado.");
+        loadCart(); 
+    }
+
+    
+    const username = localStorage.getItem('username');
+    if (username) {
+        document.getElementById('user-info').textContent = `Hola, ${username}`;
+    }
+    
+    loadCart();
+</script>
+
+</body>
+</html>
+
